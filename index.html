@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sddoc Tasklist Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="container">
+            <div class="header-top"></div>
+            <h1 class="title">sddoc Tasklist</h1>
+        </div>
+        <form name="google-sheet" id="container" class="main-form">
+            <div class="input">
+                <p class="label">Project Name :</p>
+                <input type="text" name="Project Name" id="Project Name" />
+            </div>
+            <div class="input">
+                <p class="label">Country:</p>
+                <input type="text" name="Country" id="Country" />
+            </div>
+            <div class="input">
+                <p class="label">Client Name :</p>
+                <input type="text" name="Client Name" id="Client Name" />
+            </div>
+            <div class="input">
+                <p class="label">Project Requirements:</p>
+                <textarea name="Project Requirements" id="Project Requirements" cols="30" rows="10"></textarea>
+            </div>
+            <div class="input">
+                <p class="label">Who brought Project :</p>
+                <input type="text" name="Who brought Project" id="Who brought Project" />
+            </div>
+            <div class="input">
+                <p class="label">Project assign to :</p>
+                <input type="text" name="Project assign to" id="Project assign to" />
+            </div>
+            <div class="input">
+                <p class="label">Deadline of project :</p>
+                <input type="date" name="Deadline of project" id="Deadline of project" />
+            </div>
+            <div class="input">
+                <p class="label">Amount Currency :</p>
+                <select name="Amount Currency" id="Amount Currency">
+                    <option value="none">Select</option>
+                    <option value="advance">INR</option>
+                    <option value="post">USD</option>
+                </select>
+            </div>
+            <div class="input">
+                <p class="label">Project Amount:</p>
+                <input type="number" name="Project Amount" id="Project Amount" />
+            </div>
+            <div class="input">
+                <p class="label">Payment Type :</p>
+                <select name="Payment Type" id="Payment Type">
+                    <option value="none">Select</option>
+                    <option value="advance">Advance</option>
+                    <option value="post">POST</option>
+                    <option value="milestone">Milestone</option>
+                </select>
+            </div>
+            <div class="input">
+                <p class="label">Is Project is Feasible:</p>
+                <select name="Is Project is Feasible" id="Is Project is Feasible">
+                    <option value="none">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="input">
+                <p class="label">Project Status :</p>
+                <select name="Project Status" id="Project Status">
+                    <option value="none">Select</option>
+                    <option value="inprogress">In Progress</option>
+                    <option value="completed">Completed</option>
+                    <option value="hold">Hold</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+                <div>
+                    <input type="submit" id="submit" class="submit" name="submit" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyObK5T9SsQYrQoURfBTt-4dZa_kFDewktDpKSW7gUAl5YCuNvrigaBVnRl9SsnF-4G/exec'
+        const form = document.forms['google-sheet']
+
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            const formData = new FormData(form)
+            if (formData.get('Project Name') == "" || formData.get('Country') == "" || formData.get('Client Name') == "" || formData.get('Project Requirements') == "" || formData.get('Who brought Project') == "" || formData.get('Project assign to') == "" || formData.get('Deadline of project') == "" || formData.get('Amount Currency') == "" || formData.get('Project Amount') == "" || formData.get('Payment Type') == "" || formData.get('Is Project is Feasible') == "" || formData.get('Project Status') == "") {
+                alert("Please Fill All The Fields")
+            }
+            else {
+                fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                    .then(response => alert("Your form has been submitted successfully"))
+                    .catch(error => console.error('Error!', error.message))
+            }
+        })
+    </script>
+</body>
+
+</html>
